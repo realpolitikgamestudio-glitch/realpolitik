@@ -6,7 +6,7 @@
    Zaman: bir adım bir oyun saatidir. Üretim süreleri saat, birlik hızları km/sa cinsindendir (od-veri.js). */
 const OD={on:false,ready:false,S:null,U:{}};
 /* ana oyunun durumuna köprü: modun içindeki S ve U adları kendi durumunu gösterir */
-const ODMAIN={get:()=>S,ui:()=>U,reset:()=>{S=newGame();S.setup='stories'}};
+const ODMAIN={get:()=>S,ui:()=>U,reset:()=>{S=newGame();S.setup='modes'}};
 (function(){
 const M=ODMAP,V=ODV,RG=M.R,NR=RG.length,MW=M.W,MH=M.H;
 const isL=r=>r>=0&&RG[r].t==='l',isS=r=>r>=0&&RG[r].t==='s';
@@ -1605,7 +1605,7 @@ function mount(){if(root)return;css();root=document.createElement('div');root.id
 const setH=(id,h)=>{const e=document.getElementById(id);if(e&&e._h!==h){e.innerHTML=h;e._h=h}};
 const B=(a,t,cls='b',dis)=>`<button class="${cls}" data-od="${a}"${dis?' disabled':''}>${t}</button>`;
 const bar=(v,c='')=>`<span class="bar ${c}"><i style="width:${clamp(v,0,100)}%"></i></span>`;
-function render(){if(U.pick){setH('odtop',`<button class="odc" data-od="pkback"><b>‹ Hikâyeler</b></button><div class="ods"><span><small>Açık Dünya</small><b>Yöneteceğin ülkeye dokun</b></span></div>`);for(const id of ['odwar','odmode','odmm','odgen','odtabs'])setH(id,'');
+function render(){if(U.pick){setH('odtop',`<button class="odc" data-od="pkback"><b>‹ Modlar</b></button><div class="ods"><span><small>Açık Dünya</small><b>Yöneteceğin ülkeye dokun</b></span></div>`);for(const id of ['odwar','odmode','odmm','odgen','odtabs'])setH(id,'');
     const p=document.getElementById('odp');p.hidden=!U.open;if(U.open){const [t,h]=pPick();setH('odpt',t);setH('odpb',h)}modal();return}
   const C=S.C[S.me],me=S.me;
   const net=budget(me)-upkeep(me)+oilRev(me)-(C.wcd||0)-(C.al?(C.al.pt+C.al.za+C.al.tk)*FOP:0);
@@ -1970,7 +1970,7 @@ function modal(){const m=document.getElementById('odm');const e=S.ev[0];let h=''
       <p class="note">Bu halk sana karşı ${br>=60?'çok yüksek':br>=40?'yüksek':br>=20?'orta':'düşük'} bir dirençle başlar (temel %${br}). İlhak ettiğin her bölge isyan riski taşır; kukla devlet ise direnç doğurmaz, savaşlarına katılır ve haraç öder.</p>
       <div class="kv"><span>Tamamını ilhak et</span><b>${regs.length-oth} bölge</b><span>Bölge seç</span><b>seçtiklerin + kalanı</b><span>Kukla devlet</span><b>toprak almadan</b></div>`]},
     won:()=>[`Hegemonya`,`<h2>Bölgesel hegemon</h2><p>Orta Doğu'nun ekonomik ağırlığının yarısından fazlası artık senin denetiminde. Oyun sürüyor; dilediğin kadar devam edebilirsin.</p>`]}[e.k]();
-    const bt=e.k==='olay'?EVT.find(z=>z.id===e.id).o.map((o,i)=>B('olay:'+i,o[0],i?'b':'b pri')).join(''):e.k==='conf'?B('cfannex','Tamamını ilhak et','b pri')+B('cfpick','Bölgeleri haritada seç','b')+B('cfpupall','Kukla devlet kur','b'):e.k==='demand'||e.k==='offer'||e.k==='trq'?B('evyes','Kabul et','b pri')+B('evno','Reddet','b'):e.k==='lost'?B('quit','Hikâyelere dön','b pri')+B('newg','Yeni oyun','b'):B('evok','Tamam','b pri');
+    const bt=e.k==='olay'?EVT.find(z=>z.id===e.id).o.map((o,i)=>B('olay:'+i,o[0],i?'b':'b pri')).join(''):e.k==='conf'?B('cfannex','Tamamını ilhak et','b pri')+B('cfpick','Bölgeleri haritada seç','b')+B('cfpupall','Kukla devlet kur','b'):e.k==='demand'||e.k==='offer'||e.k==='trq'?B('evyes','Kabul et','b pri')+B('evno','Reddet','b'):e.k==='lost'?B('quit','Ana menüye dön','b pri')+B('newg','Yeni oyun','b'):B('evok','Tamam','b pri');
     h=`<div class="win"><div class="tb"><span>${T[0]} · ${dateOf(S.h)}</span></div><div class="bd">${T[1]}<div class="btns">${bt}</div></div></div>`}
   m.hidden=!h;setH('odm',h)}
 function cmd(s){const [a,x,y]=s.split(':');const me=S.me;U.dmsg=a.startsWith('rel')||a.startsWith('kin')||a.startsWith('ally')||a.startsWith('pw')||a.startsWith('pk')?U.dmsg:'';
@@ -2158,7 +2158,7 @@ let PICK='TUR';
   if(S0().setup!=='odintro')return _v();
   const d=V.C[PICK],kara=(V.KARA[PICK]||[]).reduce((s,x)=>s+x[2],0),hava=(V.HAVA[PICK]||[]).reduce((s,x)=>s+x[2],0),den=(V.DENIZ[PICK]||[]).reduce((s,x)=>s+Object.values(x[2]).reduce((a,b)=>a+b,0),0);
   const sv=load();
-  return `<div class="in"><img class="bgp" src="od-kapak.png" alt=""><div class="shade"></div><div class="tp2">${btn('toStories',null,'‹ Hikâyeler','back')}</div>
+  return `<div class="in"><img class="bgp" src="od-kapak.png" alt=""><div class="shade"></div><div class="tp2">${btn('toModes',null,'‹ Modlar','back')}</div>
   <div class="mid"><p class="kick">Dosya 05 · Ocak 2026</p><h1>Açık Dünya</h1><div class="orn"><i></i><b></b><i></i></div><p class="lead">Hangi ülkeyi yöneteceksin?</p></div>
   <div class="odpick" style="position:relative">${V.ORDER.map(c=>btn('odPick',c,`<i style="background:${V.C[c].col}"></i><span><b>${V.C[c].n}</b><small>${f1(V.C[c].pop)} MN · ${f0(V.C[c].gdp)} MLR $</small></span>`,PICK===c?'sel':'')).join('')}</div>
   <div class="odsum" style="position:relative"><b>${d.n}</b><span>${d.gov} · başkent ${V.CAP[PICK]}</span><span>${kara} kara birliği · ${hava} hava filosu · ${den} gemi · sanayi ${d.ind}/5 · hava savunması ${d.ad}/5${d.mis?' · '+d.mis+' füze':''}</span><span>İstikrar %${d.stab} · savaş desteği %${d.ws}</span></div>

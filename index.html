@@ -1601,7 +1601,7 @@ function frame(dt){
   const C=G.C;if(G.T){const k=Math.min(1,dt*2.4);C.x+=(G.T.x-C.x)*k;C.y+=(G.T.y-C.y)*k;C.d+=(G.T.d-C.d)*k;if(Math.abs(G.T.x-C.x)+Math.abs(G.T.y-C.y)+Math.abs(G.T.d-C.d)<Math.min(.15,G.T.d*.01))G.T=null}
   /* bırakılan harita yavaşlayarak kaymayı sürdürür; açılış ekranında harita kendi kendine döner */
   if(!G.ptr.size&&(G.vel[0]||G.vel[1])){C.x+=G.vel[0]*dt;C.y+=G.vel[1]*dt;const f=Math.exp(-dt*4.5);G.vel[0]*=f;G.vel[1]*=f;if(Math.hypot(G.vel[0],G.vel[1])<C.d*.01)G.vel=[0,0]}
-  const front=!!S&&(S.setup==='title'||S.setup==='stories');
+  const front=!!S&&(S.setup==='title'||S.setup==='modes'||S.setup==='stories');
   if(front){C.x+=dt*3;C.d+=(120-C.d)*Math.min(1,dt*.8);C.y+=(my(34)-C.y)*Math.min(1,dt*.8)}
   updateLinks(front);
   camApply();
@@ -1737,12 +1737,18 @@ const QI=(()=>{let last=-1;try{last=+localStorage.getItem('rp_quote')}catch(e){}
 function hasSave(st){try{const j=JSON.parse(localStorage.getItem(SK(st)));return !!j&&!j.setup&&!j.end&&(j.story||'kuba')===(st||'kuba')}catch(e){return false}}
 function vTitle(){const cr='<i class="cr a"></i><i class="cr b"></i><i class="cr c"></i><i class="cr d"></i>';
   if(S.setup==='quote'){const q=QUOTES[QI];return `<div class="qt" data-act="toTitle"><blockquote>“${q[0]}”</blockquote><div class="rule"></div><p class="who">${q[1]}</p><p class="wk">${q[2]}</p></div>`}
-  if(S.setup==='title')return `<div class="tl${U.unv?' unv':''}">${cr}<p class="hdr">Kriz Masası · Gizli Yazışma</p>
+  if(S.setup==='title')return `<div class="tl${U.unv?' unv':''}">${cr}<p class="hdr"></p>
     <div class="mid"><h1>Realpolitik</h1><div class="orn"><i></i><b></b><i></i></div><p class="sub">Diplomasi · Güç · Kriz</p><p class="motto">Güç konuşur, diplomasi tercüme eder.</p></div>
-    <div class="foot">${btn('toStories',null,'Başla','start')}<p class="mono muted">TARİHİN KRİZLERİNİ SEN YÖNET</p></div></div>`;
-  if(S.setup==='stories')return `<div class="st">${cr}<div class="hd"><div><p class="eyebrow">Realpolitik · Dosyalar</p><h2>Hikâyeler</h2></div>${btn('toTitle',null,'‹ Geri','back')}</div>
-    <div class="list">${STORIES.map((s,i)=>btn('story',s.id,`${PARTS[s.id]}<span class="no">DOSYA 0${i+1}</span>${s.lock?`<span class="stamp2">${LOCK}KİLİTLİ</span>`:''}<span class="bd"><span class="yr">${s.yr}</span><h2>${s.t}</h2><p>${s.d}</p>${s.lock?'<span class="soon">Yapım aşamasında</span>':'<span class="cta">'+(s.cta||'Oyna')+'</span>'}</span>`,'poster',!!s.lock)).join('')}</div>
+    <div class="foot">${btn('toModes',null,'Başla','start')}<p class="mono muted">TARİHİN KRİZLERİNİ SEN YÖNET</p></div></div>`;
+  /* mod seçimi: hikâye dosyaları ya da Açık Dünya */
+  if(S.setup==='modes')return `<div class="st">${cr}<div class="hd"><div><p class="eyebrow">Realpolitik · Oyun modu</p><h2>Mod seç</h2></div>${btn('toTitle',null,'‹ Geri','back')}</div>
+    <div class="list">${btn('toStories',null,`<span class="ph"><img src="denge-kapak.jpg" alt=""></span><span class="no">MOD 01</span><span class="bd"><span class="yr">1862 – 1962 · Tarihî krizler</span><h2>Hikâye Modları</h2><p>Denge Politikası, Kan ve Demir, Küba ve Çanakkale. Tarihin gerçek krizlerini, gerçek liderlerin masasından yönet.</p><span class="cta">Dosyaları aç</span></span>`,'poster')}${btn('story','od',`${PARTS.od||''}<span class="no">MOD 02</span><span class="bd"><span class="yr">2026 · Orta Doğu</span><h2>Açık Dünya</h2><p>On sekiz devlet, gerçek sınırlar, gerçek ordular. Sabit bir hikâye yok: savaş, ittifak ya da barış senin kararın.</p><span class="cta">Ülke seç</span></span>`,'poster')}</div>
     <p class="hint">‹ kaydır ›</p></div>`;
+  /* hikâye listesi: Açık Dünya ayrı moddur; dosyalar sabit sırayla, kilitliler sonda */
+  if(S.setup==='stories'){const ORD=['tr39','de62','kuba','ww1'],SL=STORIES.filter(s=>s.id!=='od').map((s,i)=>[s,ORD.includes(s.id)?ORD.indexOf(s.id):10+i]).sort((a,b)=>a[1]-b[1]).map(x=>x[0]);
+    return `<div class="st">${cr}<div class="hd"><div><p class="eyebrow">Realpolitik · Dosyalar</p><h2>Hikâyeler</h2></div>${btn('toModes',null,'‹ Geri','back')}</div>
+    <div class="list">${SL.map((s,i)=>btn('story',s.id,`${PARTS[s.id]}<span class="no">DOSYA 0${i+1}</span>${s.lock?`<span class="stamp2">${LOCK}KİLİTLİ</span>`:''}<span class="bd"><span class="yr">${s.yr}</span><h2>${s.t}</h2><p>${s.d}</p>${s.lock?'<span class="soon">Yapım aşamasında</span>':'<span class="cta">'+(s.cta||'Oyna')+'</span>'}</span>`,'poster',!!s.lock)).join('')}</div>
+    <p class="hint">‹ kaydır ›</p></div>`}
   if(S.setup==='epilog')return `<div class="ep"><div class="epbg"><img alt=""><img alt=""></div><div class="shade"></div>
     <div class="roll"><div class="rt"><p class="kick">Gerçekte ne oldu</p><h1>Ekim 1962</h1><div class="orn"><i></i><b></b><i></i></div>${EPI.map(p=>`<p>${p}</p>`).join('')}</div></div>
     ${EPQ.map(q=>`<div class="epq"><blockquote>“${q[0]}”</blockquote><div class="rule"></div><p class="who">${q[1]}</p><p class="wk">${q[2]}</p></div>`).join('')}
@@ -1891,11 +1897,11 @@ function epStart(){epStop();const root=document.querySelector('.ep');if(!root)re
   at(dur-.5,()=>q[0].classList.add('on'));at(dur+9.5,()=>q[0].classList.remove('on'));at(dur+11,()=>q[1].classList.add('on'));at(dur+22,()=>q[1].classList.remove('on'));
   at(dur+23.5,()=>root.classList.add('out'));at(dur+25,()=>act('epEnd'))}
 function ui(){
-  const front=['quote','title','stories','loading','intro','doctrine','cabinet','epilog','ww1','ww1intro','tr39intro','de62intro','odintro'].includes(S.setup);
+  const front=['quote','title','modes','stories','loading','intro','doctrine','cabinet','epilog','ww1','ww1intro','tr39intro','de62intro','odintro'].includes(S.setup);
   set('title',vTitle());$('load').style.opacity=front?0:'';set('top',front?'':vTop());set('setup','');set('pop',vPop());const mini=!!S.pops[0]&&U.minFor===S.pops[0];$('pop').classList.toggle('mini',mini);set('sheet',!S.setup&&(!S.pops.length||mini)&&U.sheet?vSheet():'');
   set('bottom',S.setup?'':(window.deTabs&&deTabs()||(TR()?[['dip','Diplomasi'],['eko','Ekonomi'],['tic','Ticaret'],['log','Günlük']]:[['orders','Emirler'],['actions','Eylemler'],['log','Günlük']])).map(b=>btn('sheet',b[0],b[1],U.sheet===b[0]?'sel':'')).join(''));
   set('drawer',S.side==='su'?vDrawerSU():vDrawer());$('drawer').classList.toggle('open',U.drawer);$('scrim').hidden=!U.drawer;
-  const sb=$('snd');sb.dataset.pos=['quote','loading','epilog'].includes(S.setup)?'hide':S.setup==='stories'?'br':front?'tr':'game';if(!sb._h){sb.innerHTML=IC.cog;sb._h=1}
+  const sb=$('snd');sb.dataset.pos=['quote','loading','epilog'].includes(S.setup)?'hide':S.setup==='stories'||S.setup==='modes'?'br':front?'tr':'game';if(!sb._h){sb.innerHTML=IC.cog;sb._h=1}
   /* oyunda çark, tarih kutusunun hemen solunda durur; kutunun genişliği yazı tipine göre değiştiği için yeri ölçülür */
   const ck=sb.dataset.pos==='game'&&$('clock');if(ck){const g=$('game').getBoundingClientRect(),r=ck.getBoundingClientRect();sb.style.right=Math.round(g.right-r.left+8)+'px';sb.style.top=Math.round(r.top-g.top)+'px'}else sb.style.right=sb.style.top='';
   $('cfg').hidden=!U.cfg;volUI();
@@ -1903,13 +1909,14 @@ function ui(){
   const p0=!S.setup&&S.pops[0]||null;if(p0!==A.pop){A.pop=p0;if(p0)aSfx({brief:'brief',eve:'eve',dec:'dec',confirm:'dec',letter:'letter',warplan:'war',warresp:'war'}[p0.type]||'result')}
   liveBits();(S.side==='su'?refreshUnitsSU:refreshUnits)();
   /* açılış ekranı kaydın üstüne yazmasın; yoksa "kaldığın yerden devam et" boş oyuna döner */
-  try{if(!['quote','title','stories','loading','intro','doctrine','cabinet','epilog','ww1','ww1intro','tr39intro','de62intro','odintro'].includes(S.setup))localStorage.setItem(SK(S.story),JSON.stringify(S))}catch(e){}
+  try{if(!['quote','title','modes','stories','loading','intro','doctrine','cabinet','epilog','ww1','ww1intro','tr39intro','de62intro','odintro'].includes(S.setup))localStorage.setItem(SK(S.story),JSON.stringify(S))}catch(e){}
 }
 function act(a,arg){
   switch(a){
    case 'finish':U.sheet=null;U.drawer=false;S.setup='epilog';setTimeout(epStart,40);break;
    case 'epEnd':epStop();S=newGame();S.setup='title';U.unv=true;$('toasts').innerHTML='';G.sd=60;break;
    case 'toTitle':U.unv=S.setup==='quote';S.setup='title';break;
+   case 'toModes':if(S.setup==='title'){aStart();aSfx('begin')}S.setup='modes';break;
    case 'toStories':if(S.setup==='title'){aStart();aSfx('begin')}if(S.setup==='ww1')setTimeout(()=>setEra('1962'),400);S.setup='stories';break;
    /* Oyna: başlangıç vuruşu ve yükleme ekranı; çubuk dolunca hikâyenin giriş sayfası açılır */
    case 'story':{const L=LDS[arg];if(!L)break;U.ld=arg;S.setup='loading';G.vel=[0,0];aStart();if(A.ctx)aHit(A.ctx.currentTime+.03);
