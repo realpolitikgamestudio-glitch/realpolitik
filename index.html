@@ -214,6 +214,26 @@ button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 .poster .stamp2 svg{width:13px;height:13px;fill:#c8d0d8}
 .poster .soon{margin-top:7px;border:1px dashed var(--line);font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 14px;text-align:center}
 .st .hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+/* mod seçimi: iki tam genişlik kart, ekranı paylaşır */
+.mo .mlist{flex:1;min-height:0;width:100%;max-width:440px;display:flex;flex-direction:column;gap:14px}
+.mcard{position:relative;flex:1;min-height:0;display:block;overflow:hidden;padding:0;text-align:left;color:#ece6d6;background:#0b1118;border:1px solid #59646e;box-shadow:0 14px 34px #000c;transition:border-color .2s}
+.mcard:hover,.mcard:active{border-color:#ece6d6}
+.mcard .ph{position:absolute;inset:0;overflow:hidden;background:#000}
+.mcard .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.85)}
+.mcard .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(#0a1017b3 0%,transparent 28%,transparent 38%,#0a1017e0 74%,#0a1017 100%)}
+.mcard .tr{position:absolute;left:0;top:0;width:500%;height:100%;display:flex}
+.mcard .tr>span{position:relative;flex:0 0 20%;height:100%}
+.mcard .tr small{position:absolute;right:12px;top:10px;z-index:1;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#c8d0d8}
+.mcard .no{position:absolute;left:8px;top:7px;z-index:2;padding:3px 6px;background:#0a1017;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.mcard .bd{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.mcard .yr{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.mcard h2{font-size:30px;text-shadow:0 2px 14px #000}
+.mcard p{color:#b9c0c7;font-size:14px;line-height:1.4}
+.mcard .go{margin-top:8px;align-self:flex-start;background:#ece6d6;color:#0a1017;font-family:Cinzel,"Playfair Display",Georgia,serif;font-weight:800;font-size:13px;letter-spacing:.24em;text-transform:uppercase;padding:7px 14px}
+@media (max-height:640px){.mcard p{display:none}.mcard h2{font-size:25px}}
+@media (min-aspect-ratio:5/4){.mo .hd,.mo .mlist{max-width:960px}.mo .mlist{flex-direction:row}}
+@media (prefers-reduced-motion:no-preference){.mcard .tr{animation:mslide 20s ease-in-out infinite}
+  @keyframes mslide{0%,20%{transform:translateX(0)}25%,45%{transform:translateX(-20%)}50%,70%{transform:translateX(-40%)}75%,95%{transform:translateX(-60%)}100%{transform:translateX(-80%)}}}
 .back{background:none;border:1px solid var(--line);padding:5px 11px;font-family:var(--mono);font-size:12px;color:var(--muted)}
 #pend{position:absolute;left:12px;bottom:calc(66px + var(--sab));width:min(62%,250px);display:flex;flex-direction:column;gap:4px;pointer-events:none}
 .pd{background:#0d141ce6;border:1px solid var(--line);padding:4px 7px 5px;font-size:13px}
@@ -1741,9 +1761,11 @@ function vTitle(){const cr='<i class="cr a"></i><i class="cr b"></i><i class="cr
     <div class="mid"><h1>Realpolitik</h1><div class="orn"><i></i><b></b><i></i></div><p class="sub">Diplomasi · Güç · Kriz</p><p class="motto">Güç konuşur, diplomasi tercüme eder.</p></div>
     <div class="foot">${btn('toModes',null,'Başla','start')}<p class="mono muted">TARİHİN KRİZLERİNİ SEN YÖNET</p></div></div>`;
   /* mod seçimi: hikâye dosyaları ya da Açık Dünya */
-  if(S.setup==='modes')return `<div class="st">${cr}<div class="hd"><div><p class="eyebrow">Realpolitik · Oyun modu</p><h2>Mod seç</h2></div>${btn('toTitle',null,'‹ Geri','back')}</div>
-    <div class="list">${btn('toStories',null,`<span class="ph"><img src="denge-kapak.jpg" alt=""></span><span class="no">MOD 01</span><span class="bd"><span class="yr">1862 – 1962 · Tarihî krizler</span><h2>Hikâye Modları</h2><p>Denge Politikası, Kan ve Demir, Küba ve Çanakkale. Tarihin gerçek krizlerini, gerçek liderlerin masasından yönet.</p><span class="cta">Dosyaları aç</span></span>`,'poster')}${btn('story','od',`${PARTS.od||''}<span class="no">MOD 02</span><span class="bd"><span class="yr">2026 · Orta Doğu</span><h2>Açık Dünya</h2><p>On sekiz devlet, gerçek sınırlar, gerçek ordular. Sabit bir hikâye yok: savaş, ittifak ya da barış senin kararın.</p><span class="cta">Ülke seç</span></span>`,'poster')}</div>
-    <p class="hint">‹ kaydır ›</p></div>`;
+  /* iki kart alt alta, kaydırmadan sığar; hikâye kartının kapağında oynanabilir dosyaların kapakları sırayla kayar (sonda ilki tekrar: döngü dikişsiz) */
+  if(S.setup==='modes'){const SLD=[['denge-kapak.jpg','Denge Politikası'],['de62-kapak.webp','Kan ve Demir'],['kuba.jpg','Küba Füze Krizi'],['ww1.jpg','Çanakkale Cephesi']];
+    return `<div class="st mo">${cr}<div class="hd"><div><p class="eyebrow">Realpolitik · Oyun modu</p><h2>Mod seç</h2></div>${btn('toTitle',null,'‹ Geri','back')}</div>
+    <div class="mlist">${btn('toStories',null,`<span class="ph"><span class="tr">${[...SLD,SLD[0]].map((x,i)=>`<span><img src="${x[0]}" alt=""><small>Dosya 0${i%4+1} · ${x[1]}</small></span>`).join('')}</span></span><span class="no">Mod 01</span><span class="bd"><span class="yr">1862 – 1962 · Tarihî krizler</span><h2>Hikâye Modları</h2><p>Tarihin gerçek krizlerini, gerçek liderlerin masasından yönet.</p><span class="go">Dosyaları aç ›</span></span>`,'mcard')}${btn('story','od',`<span class="ph"><img src="od-kapak.png" alt=""></span><span class="no">Mod 02</span><span class="bd"><span class="yr">2026 · Orta Doğu</span><h2>Açık Dünya</h2><p>On sekiz devlet, gerçek sınırlar. Savaş, ittifak ya da barış senin kararın.</p><span class="go">Ülke seç ›</span></span>`,'mcard')}</div>
+    <p class="hint">Bir mod seç</p></div>`}
   /* hikâye listesi: Açık Dünya ayrı moddur; dosyalar sabit sırayla, kilitliler sonda */
   if(S.setup==='stories'){const ORD=['tr39','de62','kuba','ww1'],SL=STORIES.filter(s=>s.id!=='od').map((s,i)=>[s,ORD.includes(s.id)?ORD.indexOf(s.id):10+i]).sort((a,b)=>a[1]-b[1]).map(x=>x[0]);
     return `<div class="st">${cr}<div class="hd"><div><p class="eyebrow">Realpolitik · Dosyalar</p><h2>Hikâyeler</h2></div>${btn('toModes',null,'‹ Geri','back')}</div>
