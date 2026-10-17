@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512">
+  <title>Realpolitik</title>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="48%" r="60%">
+      <stop offset="0" stop-color="#14120d"/>
+      <stop offset="1" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="160" y1="120" x2="350" y2="390">
+      <stop offset="0" stop-color="#fff3c4"/>
+      <stop offset="0.22" stop-color="#f4cf5e"/>
+      <stop offset="0.5" stop-color="#d9a520"/>
+      <stop offset="0.78" stop-color="#a87412"/>
+      <stop offset="1" stop-color="#e6bd55"/>
+    </linearGradient>
+    <linearGradient id="white" gradientUnits="userSpaceOnUse" x1="60" y1="90" x2="450" y2="430">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.6" stop-color="#e3e8ec"/>
+      <stop offset="1" stop-color="#b9c2ca"/>
+    </linearGradient>
+    <filter id="bevelGold" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="7" specularConstant="1" specularExponent="20" lighting-color="#fff6d6" result="spec">
+        <feDistantLight azimuth="250" elevation="40"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
+      <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.85" k4="0"/>
+    </filter>
+    <filter id="bevelWhite" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.8" result="blur"/>
+      <feDiffuseLighting in="blur" surfaceScale="5" diffuseConstant="1.15" lighting-color="#ffffff" result="diff">
+        <feDistantLight azimuth="250" elevation="55"/>
+      </feDiffuseLighting>
+      <feComposite in="diff" in2="SourceGraphic" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/>
+      <feComposite in="lit" in2="SourceAlpha" operator="in"/>
+    </filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+
+    <!-- one olive branch; the pair crosses at the bottom and stays open at the top, UN-emblem style -->
+    <g id="branch">
+      <path d="M284,438 C40,470 15,105 200,80" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(232.79,438.81) rotate(-207.68) scale(1)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(217.96,436.55) rotate(-134.9) scale(0.85)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(203.22,432.97) rotate(-197.77) scale(0.98)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(189.94,428.47) rotate(-124.82) scale(0.84)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(176.81,422.7) rotate(-187.62) scale(0.97)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(165.07,416.23) rotate(-114.71) scale(0.83)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(153.56,408.52) rotate(-177.65) scale(0.95)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(143.35,400.33) rotate(-104.95) scale(0.81)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(133.45,390.96) rotate(-168.18) scale(0.94)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(124.77,381.32) rotate(-95.81) scale(0.8)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(116.48,370.54) rotate(-159.41) scale(0.92)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(109.34,359.7) rotate(-87.38) scale(0.79)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(102.65,347.8) rotate(-151.34) scale(0.91)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(97.03,336.02) rotate(-79.63) scale(0.78)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(91.94,323.26) rotate(-143.89) scale(0.89)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(87.85,310.78) rotate(-72.44) scale(0.76)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(84.36,297.44) rotate(-136.91) scale(0.88)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(81.79,284.53) rotate(-65.62) scale(0.75)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(79.89,270.86) rotate(-130.21) scale(0.86)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(78.84,257.78) rotate(-58.98) scale(0.74)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(78.53,244.06) rotate(-123.59) scale(0.85)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(79,231.06) rotate(-52.32) scale(0.72)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(80.28,217.56) rotate(-116.83) scale(0.84)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(82.25,204.89) rotate(-45.42) scale(0.71)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(85.12,191.89) rotate(-109.72) scale(0.82)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(88.6,179.81) rotate(-38.05) scale(0.7)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(93.04,167.56) rotate(-102.03) scale(0.81)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(98.03,156.34) rotate(-29.99) scale(0.69)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(104.06,145.11) rotate(-93.53) scale(0.79)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(110.55,134.99) rotate(-21.04) scale(0.67)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(118.15,125.06) rotate(-84.08) scale(0.78)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(126.14,116.31) rotate(-11.1) scale(0.66)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(135.3,107.94) rotate(-73.63) scale(0.76)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(144.79,100.81) rotate(-0.23) scale(0.65)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(155.53,94.27) rotate(-62.41) scale(0.75)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(166.51,89.02) rotate(11.22) scale(0.64)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(178.81,84.58) rotate(-50.88) scale(0.73)"/>
+      <path d="M0,0 Q18,-13 42,0 Q18,13 0,0Z" transform="translate(200,80) rotate(-7.7) scale(0.62)"/>
+    </g>
+    <g id="wreath" fill="currentColor">
+      <use xlink:href="#branch"/>
+      <use xlink:href="#branch" transform="translate(512,0) scale(-1,1)"/>
+    </g>
+    <mask id="mw" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+      <use xlink:href="#wreath" color="#fff"/>
+    </mask>
+
+    <path id="R" fill="currentColor" fill-rule="evenodd" transform="translate(261,255) scale(0.96) translate(-115,-130)" d="M18,0 H112 C160,0 180,30 180,66 C180,98 162,122 130,131 L192,236 Q197,246 212,247 V260 H140 V247 Q150,246 147,238 L96,134 H80 V232 Q80,246 98,247 V260 H18 V247 Q38,246 38,232 V28 Q38,14 18,13 Z M80,14 V120 H102 C128,120 138,98 138,66 C138,34 128,14 104,14 Z"/>
+    <mask id="mr" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+      <use xlink:href="#R" color="#fff"/>
+    </mask>
+  </defs>
+
+  
+
+  <g id="logo" transform="translate(256,250) scale(0.92) translate(-256,-256)">
+  <!-- branches: thin extrusion + white face -->
+  <use xlink:href="#wreath" color="#4b535b" transform="translate(0,4.8)"/>
+  <use xlink:href="#wreath" color="#5d666f" transform="translate(0,3.6)"/>
+  <use xlink:href="#wreath" color="#707a84" transform="translate(0,2.4)"/>
+  <use xlink:href="#wreath" color="#858f99" transform="translate(0,1.2)"/>
+  <g filter="url(#bevelWhite)">
+    <rect width="512" height="512" fill="url(#white)" mask="url(#mw)"/>
+  </g>
+
+  <!-- R: cast shadow, extrusion (deepest first), gold face -->
+  <use xlink:href="#R" color="#000" opacity="0.75" transform="translate(0,19)" filter="url(#shadow)"/>
+  <use xlink:href="#R" color="#2e2006" transform="translate(0,15.6)"/>
+  <use xlink:href="#R" color="#332407" transform="translate(0,14.4)"/>
+  <use xlink:href="#R" color="#392808" transform="translate(0,13.2)"/>
+  <use xlink:href="#R" color="#3f2c09" transform="translate(0,12)"/>
+  <use xlink:href="#R" color="#46310b" transform="translate(0,10.8)"/>
+  <use xlink:href="#R" color="#4d360c" transform="translate(0,9.6)"/>
+  <use xlink:href="#R" color="#553c0e" transform="translate(0,8.4)"/>
+  <use xlink:href="#R" color="#5d4210" transform="translate(0,7.2)"/>
+  <use xlink:href="#R" color="#664812" transform="translate(0,6)"/>
+  <use xlink:href="#R" color="#704f14" transform="translate(0,4.8)"/>
+  <use xlink:href="#R" color="#7a5716" transform="translate(0,3.6)"/>
+  <use xlink:href="#R" color="#855f19" transform="translate(0,2.4)"/>
+  <use xlink:href="#R" color="#91681c" transform="translate(0,1.2)"/>
+  <g filter="url(#bevelGold)">
+    <rect width="512" height="512" fill="url(#gold)" mask="url(#mr)"/>
+  </g>
+  </g>
+</svg>
