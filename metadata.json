@@ -1,0 +1,8 @@
+{
+  "name": "Realpolitik",
+  "description": "Tarihin jeopolitik krizlerini yönettiğin strateji ve diplomasi oyunu: Küba Füze Krizi, Çanakkale Cephesi, Kan ve Demir (Bismarck), İkinci Dünya Savaşı Denge Politikası ve Açık Dünya Orta Doğu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
